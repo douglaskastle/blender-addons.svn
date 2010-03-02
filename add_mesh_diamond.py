@@ -99,10 +99,9 @@ from bpy.props import IntProperty, FloatProperty
 
 class AddDiamond(bpy.types.Operator):
 	'''Add a diamond mesh.'''
-	bl_idname = "mesh.primitive_diamond_add"
+	bl_idname = "mesh.diamond_add"
 	bl_label = "Add Diamond"
-	bl_register = True
-	bl_undo = True
+	bl_options = {'REGISTER', 'UNDO'}
 
 	segments = IntProperty(name="Segments",
 		description="Number of segments for the diamond",
