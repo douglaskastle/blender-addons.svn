@@ -29,11 +29,11 @@
 """
 Name: '3D Cursor Menu'
 Blender: 250
+Group: 'View3D'
 """
-
 __author__ = ["Jonathan Smith (JayDez)"]
 __version__ = '2.3'
-__url__ = [""]
+__url__ = ["http://blenderartists.org/forum/showthread.php?p=1589350"]
 __bpydoc__= """
 3D Cursor Menu
 
@@ -50,6 +50,7 @@ click in the 3D View.
 Choose your function from the menu.
 
 Version history:
+v2.42 = (JayDez) - Added url for tech support.
 v2.41 - (JayDez) - Cleaned up bpydoc, added underscores in the name.
 v2.4 - (JayDez) - Added bpydoc as well as changing to click only
     (instead of double click).
