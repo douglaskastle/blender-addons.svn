@@ -104,8 +104,7 @@ def edgeIntersect(context, operator):
     if (line == None):
         operator.report({'ERROR'}, "Selected edges are parallel.")
         return
-		
-	
+
     tm = obj.matrix.copy()
     point = ((line[0] + line[1]) / 2)
     point = tm * point
