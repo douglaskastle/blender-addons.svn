@@ -52,6 +52,10 @@ click in the 3D View.
 * Choose your function from the menu.
 
 Version history:
+v1.3 - (JayDez) - Changed toggle editmode to an if statement, so that
+    if you are in editmode it will show change to object mode but
+    otherwise it shows change to edit mode. Also added seperate icons
+    for change to edit mode and to object mode.
 v1.2 - (JayDez) - Editing docs, changing 3d cursor to dynamic menu,
     reorganizing menu.
 v1.1 - (meta-androcto) - added editmode menu
@@ -153,7 +157,10 @@ class VIEW3D_MT_Dynamic_Menu(bpy.types.Menu):
         layout.menu("VIEW3D_MT_curs", icon= 'CURSOR')
         layout.separator()
 #toggle Editmode
-        layout.operator("object.editmode_toggle", text="Enter Edit Mode", icon='EDITMODE_HLT'))
+        if ob.mode != 'EDIT_MESH':
+            layout.operator("object.editmode_toggle", text="Enter Edit Mode", icon='EDITMODE_HLT')
+        else:
+            layout.operator("object.editmode_toggle", text="Enter Object Mode", icon = 'OBJECT_DATAMODE')
 
 class VIEW3D_MT_selectS(bpy.types.Menu):
     bl_label = "Selections"
