@@ -28,22 +28,21 @@ bl_addon_info = {
     'version': '2.4',
     'blender': (2, 5, 3),
     'location': 'View3D > Mouse > Menu ',
-    'url': 'http://wiki.blender.org/index.php/Extensions:2.5/Py/Scripts/3d_Cursor_Menu',
+    'url': 'NONE: LINK TO DYNAMIC MENU WIKI LATER',
     'category': '3D View'}
-"Add Extended 3D Cursor Menu (Right click in View3D)"
+"Add Dynamic Menu (Right click in View3D)"
 
 """
-Name: '3D Cursor Menu'
-Blender: 250
+Name: '3D Dynamic Menu'
+Blender: 253
 """
 
 __author__ = ["JayDez, sim88, meta-androcto, sam"]
-__version__ = '2.5'
+__version__ = '1.2'
 __url__ = [""]
 __bpydoc__= """
-3D Cursor Menu
-This adds a 3D Cursor Menu in the 3DView.
-May be merged with 3D Dynamic Menu script in the future...
+Dynamic Menu
+This adds a the Dynamic Menu in the 3DView.
 
 Usage:
 * Right click in an empty space in the 3D View(that means nothing
@@ -53,21 +52,20 @@ click in the 3D View.
 * Choose your function from the menu.
 
 Version history:
-v2.5 - (meta-androcto) - rewrite. Added editmode menu.
-v2.4 - (JayDez) - Added bpydoc as well as changing to click only
-    (instead of double click).
-v2.3 - (JayDez) - Added revert_pivot() which allows you to change
-    pivot point back to normal(which right now is median point).
-v2.2 - (Crouch) - Fix in register function, fix with random quotation
-    mark which crashed script.
-v2.1 - (Crouch) - added unregister() and set pivot point to cursor.
-v2.0 - (JayDez) - 2.5 script (initial revision)
-v1.0 - Original 2.49 script
+v1.2 - (JayDez) - Editing docs, changing 3d cursor to dynamic menu,
+    reorganizing menu.
+v1.1 - (meta-androcto) - added editmode menu
+v1.0 - (meta-androcto) - initial final revision (commited to contrib)
+v0.1 through 0.9 - various tests/contributions by various people and scripts
+    Devs: JayDez, Crouch, sim88, meta-androcto, Sam
+    Scripts: 3D Cursor Menu, Original Dynamic Menu
+    
 
 """
 import bpy
 from bpy import *
 
+#Classes for VIEW3D_MT_curs()
 class pivot_cursor(bpy.types.Operator):
     bl_idname = "view3d.pivot_cursor"
     bl_label = "Cursor as Pivot Point"
@@ -91,7 +89,9 @@ class revert_pivot(bpy.types.Operator):
         #change this to 'BOUDNING_BOX_CENTER' if needed...
         return{'FINISHED'}
 
-class VIEW3D_MT_3D_Cursor_Menu(bpy.types.Menu):
+    
+#Dynamic Menu
+class VIEW3D_MT_Dynamic_Menu(bpy.types.Menu):
     bl_label = "Dynamic Menu"
 
     def draw(self, context):
@@ -100,55 +100,60 @@ class VIEW3D_MT_3D_Cursor_Menu(bpy.types.Menu):
 
         ob = context
         if ob.mode == 'OBJECT':
-
+#Add block
             layout.menu("INFO_MT_mesh_add", text="Add Mesh", icon='OUTLINER_OB_MESH')
-            layout.separator()
-            layout.operator("transform.translate", icon='MAN_TRANS')
-            layout.operator("transform.rotate", icon='MAN_ROT')
-            layout.operator("transform.resize", text="Scale", icon='MAN_SCALE')
-            layout.separator()
             layout.operator_menu_enum("object.lamp_add", "type", icon="OUTLINER_OB_LAMP")
             layout.operator_menu_enum("object.curve_add", "type", icon='OUTLINER_OB_CURVE')
             layout.menu("INFO_MT_armature_add", text="Add Armature", icon='OUTLINER_OB_ARMATURE')
             layout.operator("object.add", text="Add Empty", icon='OUTLINER_OB_EMPTY')
             layout.separator()
-            layout.menu("VIEW3D_MT_object_group", icon='GROUP')
-            layout.operator("object.modifier_add", icon='MODIFIER')
-            layout.separator()
-            layout.operator("object.parent_set", icon= 'ROTACTIVE')
-            layout.separator()
-            layout.operator("object.delete", text="Delete Object", icon='CANCEL')
-
-        elif ob.mode == 'EDIT_MESH':
-
-#create block
-            bl_label = "Create"
-            layout.separator()
-            layout.menu("INFO_MT_mesh_add", text="Add Mesh", icon='OUTLINER_OB_MESH')
-#transform block
+#Transform block
             layout.operator("transform.translate", icon='MAN_TRANS')
             layout.operator("transform.rotate", icon='MAN_ROT')
             layout.operator("transform.resize", text="Scale", icon='MAN_SCALE')
             layout.separator()
-#select block
+#Other things
+            layout.menu("VIEW3D_MT_object_group", icon='GROUP')
+            layout.operator("object.modifier_add", icon='MODIFIER')
+            layout.separator()
+#Parent block (add delete parent)
+            layout.operator("object.parent_set", icon= 'ROTACTIVE')
+            layout.separator()
+#Delete block
+            layout.operator("object.delete", text="Delete Object", icon='CANCEL')
+
+        elif ob.mode == 'EDIT_MESH':
+
+#Add block
+            bl_label = "Create"
+            layout.menu("INFO_MT_mesh_add", text="Add Mesh", icon='OUTLINER_OB_MESH')
+            layout.separator()
+#Transform block
+            layout.operator("transform.translate", icon='MAN_TRANS')
+            layout.operator("transform.rotate", icon='MAN_ROT')
+            layout.operator("transform.resize", text="Scale", icon='MAN_SCALE')
+            layout.separator()
+#Select block
             layout.menu("VIEW3D_MT_edit_mesh_selection_mode", icon='EDIT')
             layout.menu("VIEW3D_MT_selectS", icon='OBJECT_DATAMODE')
-#edit block
+#Edit block
             layout.menu("VIEW3D_MT_edit_mesh_vertices", icon='VERTEXSEL')
             layout.menu("VIEW3D_MT_edit_mesh_edges", icon='EDGESEL')
             layout.menu("VIEW3D_MT_edit_mesh_faces", icon='FACESEL')
+            layout.separator()
+#Tools block
             layout.operator("mesh.loopcut_slide",text="Loopcut", icon= 'EDIT_VEC')
-#tools block
             layout.menu("VIEW3D_MT_edit_mesh_specials", icon='MODIFIER')
             layout.menu("VIEW3D_MT_uv_map", icon='MOD_UVPROJECT')
+            layout.separator()
             layout.operator("mesh.delete", icon='CANCEL')
-#History block
+#History/Cursor Block
         layout.menu("VIEW3D_MT_undoS", icon='ARROW_LEFTRIGHT')
-        layout.separator()
         layout.operator("transform.snap_type", text="Snap Tools", icon= 'SNAP_ON')
         layout.menu("VIEW3D_MT_curs", icon= 'CURSOR')
         layout.separator()
-        layout.operator("object.editmode_toggle", icon='EDITMODE_HLT')
+#toggle Editmode
+        layout.operator("object.editmode_toggle", text="Enter Edit Mode", icon='EDITMODE_HLT'))
 
 class VIEW3D_MT_selectS(bpy.types.Menu):
     bl_label = "Selections"
@@ -216,7 +221,7 @@ class VIEW3D_MT_editM_Edge(bpy.types.Menu):
         layout.operator("mesh.region_to_loop")
 
 def register():
-    bpy.types.register(VIEW3D_MT_3D_Cursor_Menu)
+    bpy.types.register(VIEW3D_MT_Dynamic_Menu)
     bpy.types.register(pivot_cursor)
     bpy.types.register(revert_pivot)
     bpy.types.register(VIEW3D_MT_curs)
@@ -225,10 +230,10 @@ def register():
     bpy.types.register(VIEW3D_MT_undoS)
     km = bpy.context.manager.active_keyconfig.keymaps['3D View']
     kmi = km.add_item('wm.call_menu', 'SELECTMOUSE', 'CLICK')
-    kmi.properties.name = "VIEW3D_MT_3D_Cursor_Menu"
+    kmi.properties.name = "VIEW3D_MT_Dynamic_Menu"
 
 def unregister():
-    bpy.types.unregister(VIEW3D_MT_3D_Cursor_Menu)
+    bpy.types.unregister(VIEW3D_MT_Dynamic_Menu)
     bpy.types.unregister(pivot_cursor)
     bpy.types.unregister(revert_pivot)
     bpy.types.unregister(VIEW3D_MT_curs)
@@ -238,7 +243,7 @@ def unregister():
     km = bpy.context.manager.active_keyconfig.keymaps['3D View']
     for kmi in km.items:
         if kmi.idname == 'wm.call_menu':
-            if kmi.properties.name == "VIEW3D_MT_3D_Cursor_Menu":
+            if kmi.properties.name == "VIEW3D_MT_Dynamic_Menu":
                 km.remove_item(kmi)
                 break
 
