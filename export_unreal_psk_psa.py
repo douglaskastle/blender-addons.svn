@@ -20,7 +20,8 @@ bl_addon_info = {
     'author': 'Darknet',
     'version': '2.0',
     'blender': (2, 5, 3),
-    'location': 'File > Import ',
+    'location': 'File > Export ',
+    'Description': 'Export Unreal Engine (.psk & .psa)',
     'url': 'http://wiki.blender.org/index.php/Extensions:2.5/Py/Scripts/File_I-O/Unreal_psk_psa',
     'category': 'Import/Export'}
 

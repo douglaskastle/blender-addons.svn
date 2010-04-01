@@ -26,6 +26,7 @@ bl_addon_info = {
     'version': '2.0',
     'blender': (2, 5, 3),
     'location': 'View3D > Add > Mesh ',
+    'description': 'Adds a mesh Spindle to the Add Mesh menu',
     'url': 'http://wiki.blender.org/index.php/Extensions:2.5/Py/Scripts/Add_Spindle',
     'category': 'Add Mesh'}
 

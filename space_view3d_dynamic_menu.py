@@ -28,6 +28,7 @@ bl_addon_info = {
     'version': '2.4',
     'blender': (2, 5, 3),
     'location': 'View3D > Mouse > Menu ',
+    'description': 'Dynamic Menu Object/Edit mode in the 3D View',
     'url': 'NONE: LINK TO DYNAMIC MENU WIKI LATER',
     'category': '3D View'}
 "Add Dynamic Menu (Right click in View3D)"

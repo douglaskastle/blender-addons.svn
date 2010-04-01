@@ -27,9 +27,9 @@ bl_addon_info = {
     'version': '1.0.1',
     'blender': (2, 5, 3),
     'location': 'View3D > Specials > Relax ',
+    'Description': 'Relax the selected verts while retaining the shape',
     'url': 'http://wiki.blender.org/index.php/Extensions:2.5/Py/Scripts/Relax',
     'category': 'Mesh'}
-
 
 """
 Name: 'Relax'

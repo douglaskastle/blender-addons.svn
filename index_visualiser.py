@@ -17,13 +17,14 @@
 # ##### END GPL LICENSE BLOCK #####
 
 bl_addon_info = {
-    "name": "Index Visualiser",
-    "author": "Bartius Crouch",
-    "version": "2.2 2010/03/16",
-    "blender": "2.5.2",
-    "category": "3D View",
-    "location": "View3D > properties panel > display tab",
-    "url": "http://wiki.blender.org/index.php/Extensions:2.5/Py/Scripts/Index_Visualiser",
+    'name': 'Index Visualiser',
+    'author': 'Bartius Crouch',
+    'version': '2.2 2010/03/16',
+    'blender': '2.5.2',
+    'category': '3D View',
+    'location': 'View3D > properties panel > display tab',
+    'Description': 'Display the indices of vertices, edges and faces in the 3d-view',
+    'url': 'http://wiki.blender.org/index.php/Extensions:2.5/Py/Scripts/Index_Visualiser',
     "doc": """\
 Display the indices of vertices, edges and faces in the 3d-view.
 

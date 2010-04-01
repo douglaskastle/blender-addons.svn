@@ -25,6 +25,7 @@ bl_addon_info = {
     'version': '1.0',
     'blender': (2, 5, 3),
     'location': 'Snap',
+    'description': 'adds Snap cursor to edge intersect to cursor tools',
     'url': '',
     'category': 'Cursor'}
 

@@ -19,9 +19,9 @@ bl_addon_info = {
     'version': '2.0',
     'blender': (2, 5, 3),
     'location': 'File > Import ',
+    'Description': 'Import Unreal Engine (.psk)',
     'url': 'http://wiki.blender.org/index.php/Extensions:2.5/Py/Scripts/File_I-O/Unreal_psk_psa',
     'category': 'Import/Export'}
-
 
 """
 Name: 'Skeleton Mesh Import(.psk)'
