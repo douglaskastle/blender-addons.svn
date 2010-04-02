@@ -23,7 +23,7 @@ bl_addon_info = {
     'blender': '2.5.2',
     'category': '3D View',
     'location': 'View3D > properties panel > display tab',
-    'Description': 'Display the indices of vertices, edges and faces in the 3d-view',
+    'description': 'Display the indices of vertices, edges and faces in the 3d-view',
     'url': 'http://wiki.blender.org/index.php/Extensions:2.5/Py/Scripts/Index_Visualiser',
     "doc": """\
 Display the indices of vertices, edges and faces in the 3d-view.
