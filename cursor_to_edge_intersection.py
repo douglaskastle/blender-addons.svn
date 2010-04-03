@@ -27,7 +27,7 @@ bl_addon_info = {
     'location': 'Snap',
     'description': 'adds Snap cursor to edge intersect to cursor tools',
     'url': '',
-    'category': 'Cursor'}
+    'category': '3D View'}
 
 from Mathutils import Vector, Matrix
 import math
