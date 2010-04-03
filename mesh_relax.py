@@ -24,7 +24,7 @@
 bl_addon_info = {
     'name': 'Mesh: Relax',
     'author': 'Fabian Fricke',
-    'version': '1.0.1',
+    'version': '1.0  2010/04/03',
     'blender': (2, 5, 3),
     'location': 'View3D > Specials > Relax ',
     'description': 'Relax the selected verts while retaining the shape',
@@ -32,19 +32,15 @@ bl_addon_info = {
     'category': 'Mesh'}
 
 """
-Name: 'Relax'
-Blender: 250
-Tip: 'Relax Mesh'
-__author__ = ["Fabian Fricke"]
-__version__ = '0.90'
-__url__ = [
-	"Script, http://frigi.designdevil.de/Scripts/Relax/mesh_relax.py", 
-	"Author Site , http://frigi.designdevil.de"]
-email__=["frigi.f {at} gmail {dot} com"]
 
 Usage:
 
 Launch from "W-menu" or from "Mesh -> Vertices -> Relax"
+
+
+Additional links:
+    Author Site: http://frigi.designdevil.de
+    e-mail: frigi.f {at} gmail {dot} com
 
 """
 
@@ -59,7 +55,12 @@ def relax_mesh(self, context):
     me_old = obj.data
     me_name = me_old.name
 
-    # duplicate the object so it can be used as a target for the shrinkwrap modifier
+    # deselect everything that's not related
+    for o in bpy.context.selected_objects:
+        o.selected = False
+
+    # duplicate the object so it can be used for the shrinkwrap modifier
+    obj.selected = True # make sure the object is selected!
     bpy.ops.object.mode_set(mode='OBJECT')
     bpy.ops.object.duplicate()
     target = context.active_object
@@ -73,7 +74,7 @@ def relax_mesh(self, context):
     bpy.ops.mesh.vertices_smooth()
     bpy.ops.object.mode_set(mode='OBJECT')
 
-    # apply and remove the modifier (Ugly but according to Martin and Campbell it's the right way to do it at the moment.)
+    # apply and remove the modifier
     me = obj.create_mesh(True, 'PREVIEW')
     obj.data = me
     obj.modifiers.remove(sw)
