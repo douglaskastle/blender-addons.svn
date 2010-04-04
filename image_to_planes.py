@@ -59,7 +59,7 @@ bl_addon_info = {
     'url': '',
     'description': 'Imports images and creates planes \
 with the appropiate aspect ratio',
-    'category': 'Add Mesh'}
+    'category': 'Object'}
 
 ##############################################################################
 ##############################################################################
