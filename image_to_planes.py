@@ -55,11 +55,11 @@ bl_addon_info = {
     'author': 'Florian Meyer (testscreenings)',
     'version': '0.6',
     'blender': (2, 5, 2),
-    'location': 'View3D > Import Images as Planes',
+    'location': 'View3D > Add Mesh',
     'url': '',
     'description': 'Imports images and creates planes \
 with the appropiate aspect ratio',
-    'category': 'Object'}
+    'category': 'Add Mesh'}
 
 ##############################################################################
 ##############################################################################
@@ -241,7 +241,7 @@ def getTexture(path, img):
 #########################################
 
 def mapget(self):
-    """custom property of the planesFromImages addon"""
+    """custom property of the image_to_planes addon"""
     mapping = []
     mapping.append(self.shadeless)
     mapping.append(self.transparency)
@@ -354,9 +354,9 @@ def main(filePath, options, mapping):
 #################       O P E R A T O R        ###############################
 ##############################################################################
 
-class planesFromImages(bpy.types.Operator):
+class image_to_planes(bpy.types.Operator):
     ''''''
-    bl_idname = "mesh.planesFromImages"
+    bl_idname = "mesh.image_to_planes"
     bl_label = "Import Images as Planes"
     bl_description = "Create plane(s) from images"
     bl_options = {'REGISTER', 'UNDO'}
@@ -437,16 +437,16 @@ class planesFromImages(bpy.types.Operator):
 
 #### Registering ####
 
-menu_func = (lambda self, context: self.layout.operator(planesFromImages.bl_idname,
+menu_func = (lambda self, context: self.layout.operator(image_to_planes.bl_idname,
                                         text="Imageplanes", icon='PLUGIN'))
 
 def register():
-    bpy.types.register(planesFromImages)
+    bpy.types.register(image_to_planes)
     bpy.types.INFO_MT_mesh_add.append(menu_func)
 
 
 def unregister():
-    bpy.types.unregister(planesFromImages)
+    bpy.types.unregister(image_to_planes)
     bpy.types.INFO_MT_mesh_add.remove(menu_func)
 
 
