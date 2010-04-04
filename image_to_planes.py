@@ -56,7 +56,7 @@ bl_addon_info = {
     'version': '0.6',
     'blender': (2, 5, 2),
     'location': 'View3D > Add Mesh',
-    'url': '',
+    'url': 'http://wiki.blender.org/index.php/Extensions:2.5/Py/Scripts/Object/Image_To_Planes',
     'description': 'Imports images and creates planes \
 with the appropiate aspect ratio',
     'category': 'Object'}
