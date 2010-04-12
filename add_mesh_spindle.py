@@ -50,14 +50,14 @@ Usage:
 
 
 import bpy
-import Mathutils
+import mathutils
 from math import pi
 
 
 def add_spindle( spindle_segments, spindle_radius, spindle_height, spindle_cap_height):
 
-    Vector = Mathutils.Vector
-    RotationMatrix = Mathutils.RotationMatrix
+    Vector = mathutils.Vector
+    RotationMatrix = mathutils.RotationMatrix
 
     verts = []
     faces = []

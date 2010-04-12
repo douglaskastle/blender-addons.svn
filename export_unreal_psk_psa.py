@@ -88,7 +88,7 @@ import os
 import time
 import datetime
 import bpy
-import Mathutils
+import mathutils
 import operator
 
 from struct import pack, calcsize
@@ -786,7 +786,7 @@ def parse_meshes(blender_meshes, psk_file):
 
 					
 					# RE - Append untransformed vector (for normal calc below)
-					# TODO: convert to Blender.Mathutils
+					# TODO: convert to Blender.mathutils
 					vect_list.append(FVector(vert.co.x, vert.co.y, vert.co.z))
 					
 					# Transform position for export
@@ -819,7 +819,7 @@ def parse_meshes(blender_meshes, psk_file):
 				# get normal from blender
 				no = current_face.normal
 				
-				# TODO: convert to Blender.Mathutils
+				# TODO: convert to Blender.mathutils
 				# convert to FVector
 				norm = FVector(no[0], no[1], no[2])
 				
@@ -1076,7 +1076,7 @@ def make_filename_ext(filename, extension):
 # (ie. the same as B*A if A and B are matrices representing 
 # the rotations described by quaternions a and b)
 def grassman(a, b):	
-	return Mathutils.Quaternion(
+	return mathutils.Quaternion(
 		a.w*b.w - a.x*b.x - a.y*b.y - a.z*b.z,
 		a.w*b.x + a.x*b.w + a.y*b.z - a.z*b.y,
 		a.w*b.y - a.x*b.z + a.y*b.w + a.z*b.x,
@@ -1202,10 +1202,10 @@ def parse_animation(blender_scene, blender_armatures, psa_file):
 					#print ("-------------------", pose_bone.name)
 					head = pose_bone.head
 					
-					posebonemat = Mathutils.Matrix(pose_bone.matrix)
+					posebonemat = mathutils.Matrix(pose_bone.matrix)
 					parent_pose = pose_bone.parent
 					if parent_pose != None:
-						parentposemat = Mathutils.Matrix(parent_pose.matrix)
+						parentposemat = mathutils.Matrix(parent_pose.matrix)
 						#blender 2.4X it been flip around with new 2.50 (mat1 * mat2) should now be (mat2 * mat1)
 						posebonemat = parentposemat.invert() * posebonemat
 					head = posebonemat.translation_part()

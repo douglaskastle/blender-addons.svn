@@ -43,7 +43,7 @@ Updated by: Darknet
 """
 
 import bpy
-import Mathutils
+import mathutils
 import os
 import sys
 import string
@@ -55,9 +55,9 @@ from math import *
 
 #from bpy.props import *
 
-import Mathutils
+import mathutils
 
-vector = Mathutils.Vector
+vector = mathutils.Vector
 
 #output log in to txt file
 DEBUGLOG = False
@@ -76,7 +76,7 @@ class md5_bone:
 	bone_index=0
 	name=""
 	bindpos=[]
-	bindmat = Mathutils.Quaternion()
+	bindmat = mathutils.Quaternion()
 	parent=""
 	parent_index=0
 	blenderbone=None
@@ -315,12 +315,12 @@ def pskimport(infile):
 		#w,x,y,z
 		if (counter == 0):#main parent
 			print("no parent bone")
-			createbone.bindmat = Mathutils.Quaternion(indata[7],indata[4],indata[5],indata[6])
-			#createbone.bindmat = Mathutils.Quaternion(indata[7],-indata[4],-indata[5],-indata[6])
+			createbone.bindmat = mathutils.Quaternion(indata[7],indata[4],indata[5],indata[6])
+			#createbone.bindmat = mathutils.Quaternion(indata[7],-indata[4],-indata[5],-indata[6])
 		else:#parent
 			print("parent bone")
-			createbone.bindmat = Mathutils.Quaternion(indata[7],-indata[4],-indata[5],-indata[6])
-			#createbone.bindmat = Mathutils.Quaternion(indata[7],indata[4],indata[5],indata[6])
+			createbone.bindmat = mathutils.Quaternion(indata[7],-indata[4],-indata[5],-indata[6])
+			#createbone.bindmat = mathutils.Quaternion(indata[7],indata[4],indata[5],indata[6])
 			
 		md5_bones.append(createbone)
 		counter = counter + 1

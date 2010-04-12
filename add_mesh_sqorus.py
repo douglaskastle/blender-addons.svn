@@ -53,12 +53,12 @@ Usage:
 
 
 import bpy
-import Mathutils
+import mathutils
 
 
 def add_sqorus(sqorus_width, sqorus_height, sqorus_depth):
 
-    Vector = Mathutils.Vector
+    Vector = mathutils.Vector
     verts = []
     faces = []
     half_depth = sqorus_depth * .5

@@ -29,7 +29,7 @@ bl_addon_info = {
     'url': '',
     'category': '3D View'}
 
-from Mathutils import Vector, Matrix
+from mathutils import Vector, Matrix
 import math
 import bpy
 

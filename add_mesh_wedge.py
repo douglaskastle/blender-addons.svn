@@ -51,12 +51,12 @@ Usage:
 
 
 import bpy
-import Mathutils
+import mathutils
 
 
 def add_wedge( wedge_width, wedge_height, wedge_depth):
 
-    Vector = Mathutils.Vector
+    Vector = mathutils.Vector
 
     verts = []
     faces = []

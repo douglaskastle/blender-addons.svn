@@ -37,7 +37,7 @@ How to use:
 """}
 
 
-import bgl, blf, bpy, Mathutils
+import bgl, blf, bpy, mathutils
 
 # calculate locations and store them as ID property in the mesh
 def calc_callback(self, context):
@@ -66,23 +66,23 @@ def calc_callback(self, context):
     if bpy.context.scene.display_vert_index:
         for v in me.verts:
             if v.selected or not bpy.context.scene.display_sel_only:
-                locs.append([1.0, 1.0, 1.0, v.index, Mathutils.Vector(v.co[:][0], v.co[:][1], v.co[:][2], 1.0)])
+                locs.append([1.0, 1.0, 1.0, v.index, mathutils.Vector(v.co[:][0], v.co[:][1], v.co[:][2], 1.0)])
     if bpy.context.scene.display_edge_index:
         for ed in me.edges:
             if ed.selected or not bpy.context.scene.display_sel_only:
                 v1, v2 = ed.verts
-                v1 = Mathutils.Vector(me.verts[v1].co[:])
-                v2 = Mathutils.Vector(me.verts[v2].co[:])
+                v1 = mathutils.Vector(me.verts[v1].co[:])
+                v2 = mathutils.Vector(me.verts[v2].co[:])
                 loc = v1 + ((v2-v1)/2.0)
-                locs.append([1.0, 1.0, 0.0, ed.index, Mathutils.Vector(loc[0],loc[1],loc[2],1.0)])
+                locs.append([1.0, 1.0, 0.0, ed.index, mathutils.Vector(loc[0],loc[1],loc[2],1.0)])
     if bpy.context.scene.display_face_index:
         for f in me.faces:
             if f.selected or not bpy.context.scene.display_sel_only:
-                locs.append([1.0, 0.0, 0.5, f.index, Mathutils.Vector(f.center[0], f.center[1], f.center[2], 1.0)])
+                locs.append([1.0, 0.0, 0.5, f.index, mathutils.Vector(f.center[0], f.center[1], f.center[2], 1.0)])
                 
     for loc in locs:
         vec = total_mat*loc[4] # order is important
-        vec = Mathutils.Vector(vec[0]/vec[3],vec[1]/vec[3],vec[2]/vec[3]) # dehomogenise
+        vec = mathutils.Vector(vec[0]/vec[3],vec[1]/vec[3],vec[2]/vec[3]) # dehomogenise
         x = int(mid_x + vec[0]*width/2.0)
         y = int(mid_y + vec[1]*height/2.0)
         texts+=[loc[0], loc[1], loc[2], loc[3], x, y, 0]
