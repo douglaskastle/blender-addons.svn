@@ -17,7 +17,7 @@
 # ##### END GPL LICENSE BLOCK #####
 
 bl_addon_info = {
-    'name': 'Index Visualiser',
+    'name': '3D View: Index Visualiser',
     'author': 'Bartius Crouch',
     'version': '2.2 2010/03/16',
     'blender': '2.5.2',

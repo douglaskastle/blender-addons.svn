@@ -20,7 +20,7 @@
 # ***** END GPL LICENCE BLOCK *****
 
 bl_addon_info = {
-    'name': 'Cursor to Edge Intersection',
+    'name': '3D View: Cursor to Edge Intersection',
     'author': 'Keith (Wahooney) Boshoff',
     'version': '1.0',
     'blender': (2, 5, 3),
