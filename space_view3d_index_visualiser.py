@@ -170,11 +170,11 @@ def register():
     bpy.types.Scene.BoolProperty(attr="display_edge_index", name="Edges", description="Display edge indices")
     bpy.types.Scene.BoolProperty(attr="display_face_index", name="Faces", description="Display face indices")
     bpy.types.register(IndexVisualiser)
-    bpy.types.VIEW3D_PT_3dview_display.prepend(menu_func)
+    bpy.types.VIEW3D_PT_view3d_display.prepend(menu_func)
 
 def unregister():
     bpy.types.unregister(IndexVisualiser)
-    bpy.types.VIEW3D_PT_3dview_display.remove(menu_func)
+    bpy.types.VIEW3D_PT_view3d_display.remove(menu_func)
 
 if __name__ == "__main__":
     register()
