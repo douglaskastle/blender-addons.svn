@@ -19,7 +19,7 @@
 bl_addon_info = {
     'name': '3D View: Index Visualiser',
     'author': 'Bartius Crouch',
-    'version': '2.2 2010/03/16',
+    'version': '2.3 2010/05/03',
     'blender': '2.5.2',
     'category': '3D View',
     'location': 'View3D > properties panel > display tab',
@@ -31,7 +31,7 @@ Display the indices of vertices, edges and faces in the 3d-view.
 How to use:
 - Select a mesh and go into editmode
 - Display the properties panel (N-key)
-- Go to the Display tab (4th tab), it helps to fold the tabs above it
+- Go to the Display tab, it helps to fold the tabs above it
 - Press the 'Visualise indices button'
 
 """}
@@ -66,19 +66,19 @@ def calc_callback(self, context):
     if bpy.context.scene.display_vert_index:
         for v in me.verts:
             if v.selected or not bpy.context.scene.display_sel_only:
-                locs.append([1.0, 1.0, 1.0, v.index, mathutils.Vector((v.co[:][0], v.co[:][1], v.co[:][2], 1.0))])
+                locs.append([1.0, 1.0, 1.0, v.index, v.co.copy().resize4D()])
     if bpy.context.scene.display_edge_index:
         for ed in me.edges:
             if ed.selected or not bpy.context.scene.display_sel_only:
                 v1, v2 = ed.verts
-                v1 = mathutils.Vector(me.verts[v1].co[:])
-                v2 = mathutils.Vector(me.verts[v2].co[:])
+                v1 = me.verts[v1].co.copy()
+                v2 = me.verts[v2].co.copy()
                 loc = v1 + ((v2-v1)/2.0)
-                locs.append([1.0, 1.0, 0.0, ed.index, mathutils.Vector((loc[0],loc[1],loc[2],1.0))])
+                locs.append([1.0, 1.0, 0.0, ed.index, loc.resize4D()])
     if bpy.context.scene.display_face_index:
         for f in me.faces:
             if f.selected or not bpy.context.scene.display_sel_only:
-                locs.append([1.0, 0.0, 0.5, f.index, mathutils.Vector((f.center[0], f.center[1], f.center[2], 1.0))])
+                locs.append([1.0, 0.0, 0.5, f.index, f.center.resize4D()])
                 
     for loc in locs:
         vec = total_mat*loc[4] # order is important
