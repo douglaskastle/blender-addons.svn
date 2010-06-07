@@ -33,27 +33,6 @@ from math import sqrt
 from mathutils import *
 from bpy.props import *
 
-
-# Stores the values of a list of properties and the
-# operator id in a property group ('recall_op') inside the object.
-# Could (in theory) be used for non-objects.
-# Note: Replaces any existing property group with the same name!
-# ob ... Object to store the properties in.
-# op ... The operator that should be used.
-# op_args ... A dictionary with valid Blender
-#             properties (operator arguments/parameters).
-def store_recall_properties(ob, op, op_args):
-    if ob and op and op_args:
-        recall_properties = {}
-
-        # Add the operator identifier and op parameters to the properties.
-        recall_properties['op'] = op.bl_idname
-        recall_properties['args'] = op_args
-
-        # Store new recall properties.
-        ob['recall'] = recall_properties
-
-
 # calculates the matrix for the new object
 # depending on user pref
 def align_matrix(context):
@@ -1193,12 +1172,6 @@ class AddTruncatedTetrahedron(bpy.types.Operator):
         obj = create_mesh_object(context, verts, [], faces,
             'TrTetrahedron', props.edit, self.align_matrix)
 
-        # Store 'recall' properties in the object.
-        recall_args_list = {
-            'edit': True,
-            'hexagon_side': props.hexagon_side,
-            'star_ngons': props.star_ngons}
-        store_recall_properties(obj, self, recall_args_list)
 
         return {'FINISHED'}
 
@@ -1244,13 +1217,6 @@ class AddCuboctahedron(bpy.types.Operator):
 
         obj = create_mesh_object(context, verts, [], faces, name, props.edit, self.align_matrix)
 
-        # Store 'recall' properties in the object.
-        recall_args_list = {
-            'edit': True,
-            'octagon_side': props.octagon_side,
-            'star_ngons': props.star_ngons}
-        store_recall_properties(obj, self, recall_args_list)
-
         return {'FINISHED'}
 
     def invoke(self, context, event):
@@ -1289,11 +1255,6 @@ class AddRhombicuboctahedron(bpy.types.Operator):
         obj = create_mesh_object(context, verts, [], faces,
             'Rhombicuboctahedron', props.edit, self.align_matrix)
 
-        # Store 'recall' properties in the object.
-        recall_args_list = {
-            'edit': True,
-            'quad_size': props.quad_size}
-        store_recall_properties(obj, self, recall_args_list)
 
         return {'FINISHED'}
 
@@ -1338,13 +1299,6 @@ class AddTruncatedOctahedron(bpy.types.Operator):
 
         obj = create_mesh_object(context, verts, [], faces,
             'TrOctahedron', props.edit, self.align_matrix)
-
-        # Store 'recall' properties in the object.
-        recall_args_list = {
-            'edit': True,
-            'hexagon_side': props.hexagon_side,
-            'star_ngons': props.star_ngons}
-        store_recall_properties(obj, self, recall_args_list)
 
         return {'FINISHED'}
 
@@ -1395,14 +1349,6 @@ class AddTruncatedCuboctahedron(bpy.types.Operator):
 
         obj = create_mesh_object(context, verts, [], faces,
             'TrCuboctahedron', props.edit, self.align_matrix)
-
-        # Store 'recall' properties in the object.
-        recall_args_list = {
-            'edit': True,
-            'octagon_size': props.octagon_size,
-            'octagon_side': props.octagon_side,
-            'star_ngons': props.star_ngons}
-        store_recall_properties(obj, self, recall_args_list)
 
         return {'FINISHED'}
 
