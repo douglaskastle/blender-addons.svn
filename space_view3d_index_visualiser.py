@@ -16,16 +16,23 @@
 #
 # ##### END GPL LICENSE BLOCK #####
 
+# <pep8 compliant>
+
+
 bl_addon_info = {
     'name': '3D View: Index Visualiser',
     'author': 'Bartius Crouch',
-    'version': '2.3 2010/05/03',
-    'blender': '2.5.2',
+    'version': '2.4 2010/06/07',
+    'blender': (2, 5, 3),
     'category': '3D View',
     'location': 'View3D > properties panel > display tab',
-    'description': 'Display the indices of vertices, edges and faces in the 3d-view',
-    'url': 'http://wiki.blender.org/index.php/Extensions:2.5/Py/Scripts/Index_Visualiser',
-    "doc": """\
+    'description': 'Display the indices of vertices, edges and faces '\
+        'in the 3d-view',
+    'wiki_url': 'http://wiki.blender.org/index.php/Extensions:2.5/Py/'\
+        'Scripts/Index_Visualiser',
+    'tracker_url': 'http://projects.blender.org/tracker/index.php?'\
+        'func=detail&aid=21557&group_id=153&atid=468',
+    'doc': """\
 Display the indices of vertices, edges and faces in the 3d-view.
 
 How to use:
@@ -37,7 +44,11 @@ How to use:
 """}
 
 
-import bgl, blf, bpy, mathutils
+import bgl
+import blf
+import bpy
+import mathutils
+
 
 # calculate locations and store them as ID property in the mesh
 def calc_callback(self, context):
@@ -82,13 +93,15 @@ def calc_callback(self, context):
                 
     for loc in locs:
         vec = total_mat*loc[4] # order is important
-        vec = mathutils.Vector((vec[0]/vec[3],vec[1]/vec[3],vec[2]/vec[3])) # dehomogenise
+        # dehomogenise
+        vec = mathutils.Vector((vec[0]/vec[3],vec[1]/vec[3],vec[2]/vec[3]))
         x = int(mid_x + vec[0]*width/2.0)
         y = int(mid_y + vec[1]*height/2.0)
         texts+=[loc[0], loc[1], loc[2], loc[3], x, y, 0]
 
     # store as ID property in mesh
     context.active_object.data['IndexVisualiser'] = texts
+
 
 # draw in 3d-view
 def draw_callback(self, context):
@@ -109,6 +122,7 @@ def draw_callback(self, context):
         bgl.glColor3f(texts[i], texts[i+1], texts[i+2])
         blf.position(0, texts[i+4], texts[i+5], texts[i+6])
         blf.draw(0, str(int(texts[i+3])))
+
 
 # operator
 class IndexVisualiser(bpy.types.Operator):
@@ -137,8 +151,10 @@ class IndexVisualiser(bpy.types.Operator):
                 # operator is called for the first time, start everything
                 context.scene.display_indices = 1
                 context.manager.add_modal_handler(self)
-                self.handle1 = context.region.callback_add(calc_callback, (self, context), 'POST_VIEW')
-                self.handle2 = context.region.callback_add(draw_callback, (self, context), 'POST_PIXEL')
+                self.handle1 = context.region.callback_add(calc_callback,
+                    (self, context), 'POST_VIEW')
+                self.handle2 = context.region.callback_add(draw_callback,
+                    (self, context), 'POST_PIXEL')
                 return {'RUNNING_MODAL'}
             else:
                 # operator is called again, stop displaying
@@ -148,33 +164,44 @@ class IndexVisualiser(bpy.types.Operator):
             self.report({'WARNING'}, "View3D not found, can't run operator")
             return {'CANCELLED'}
 
+
 # defining the panel
 def menu_func(self, context):
     col = self.layout.column(align=True)
     col.operator(IndexVisualiser.bl_idname, text="Visualise indices")
     row = col.row(align=True)
-    row.active = (context.mode=='EDIT_MESH' and context.scene.display_indices==1)
+    row.active = (context.mode=='EDIT_MESH' and \
+        context.scene.display_indices==1)
     row.prop(context.scene, 'display_vert_index', toggle=True)
     row.prop(context.scene, 'display_edge_index', toggle=True)
     row.prop(context.scene, 'display_face_index', toggle=True)
     row = col.row(align=True)
-    row.active = (context.mode=='EDIT_MESH' and context.scene.display_indices==1)
+    row.active = (context.mode=='EDIT_MESH' and \
+        context.scene.display_indices==1)
     row.prop(context.scene, 'display_sel_only')
     self.layout.separator()
+
 
 def register():
     bpy.types.Scene.IntProperty(attr="display_indices", default=0)
     bpy.context.scene.display_indices = 0
-    bpy.types.Scene.BoolProperty(attr="display_sel_only", name="Selected only", description="Only display indices of selected vertices/edges/faces", default=True)
-    bpy.types.Scene.BoolProperty(attr="display_vert_index", name="Vertices", description="Display vertex indices", default=True)
-    bpy.types.Scene.BoolProperty(attr="display_edge_index", name="Edges", description="Display edge indices")
-    bpy.types.Scene.BoolProperty(attr="display_face_index", name="Faces", description="Display face indices")
+    bpy.types.Scene.BoolProperty(attr="display_sel_only", name="Selected only",
+        description="Only display indices of selected vertices/edges/faces",
+        default=True)
+    bpy.types.Scene.BoolProperty(attr="display_vert_index", name="Vertices",
+        description="Display vertex indices", default=True)
+    bpy.types.Scene.BoolProperty(attr="display_edge_index", name="Edges",
+        description="Display edge indices")
+    bpy.types.Scene.BoolProperty(attr="display_face_index", name="Faces",
+        description="Display face indices")
     bpy.types.register(IndexVisualiser)
     bpy.types.VIEW3D_PT_view3d_display.prepend(menu_func)
+
 
 def unregister():
     bpy.types.unregister(IndexVisualiser)
     bpy.types.VIEW3D_PT_view3d_display.remove(menu_func)
+
 
 if __name__ == "__main__":
     register()
