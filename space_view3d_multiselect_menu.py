@@ -76,33 +76,33 @@ class VIEW3D_MT_Multiselect_Menu(bpy.types.Menu):
 
             prop = layout.operator("wm.context_set_value", text="Vertex", icon='VERTEXSEL')
             prop.value = "(True, False, False)"
-            prop.path = "tool_settings.mesh_selection_mode"
+            prop.data_path = "tool_settings.mesh_selection_mode"
 
             prop = layout.operator("wm.context_set_value", text="Edge", icon='EDGESEL')
             prop.value = "(False, True, False)"
-            prop.path = "tool_settings.mesh_selection_mode"
+            prop.data_path = "tool_settings.mesh_selection_mode"
 
             prop = layout.operator("wm.context_set_value", text="Face", icon='FACESEL')
             prop.value = "(False, False, True)"
-            prop.path = "tool_settings.mesh_selection_mode"
+            prop.data_path = "tool_settings.mesh_selection_mode"
             layout.separator()
 
             prop = layout.operator("wm.context_set_value", text="Vertex & Edge", icon='ORTHO_OFF')
             prop.value = "(True, True, False)"
-            prop.path = "tool_settings.mesh_selection_mode"
+            prop.data_path = "tool_settings.mesh_selection_mode"
 
             prop = layout.operator("wm.context_set_value", text="Vertex & Face", icon='ORTHO')
             prop.value = "(True, False, True)"
-            prop.path = "tool_settings.mesh_selection_mode"
+            prop.data_path = "tool_settings.mesh_selection_mode"
 
             prop = layout.operator("wm.context_set_value", text="Edge & Face", icon='SNAP_FACE')
             prop.value = "(False, True, True)"
-            prop.path = "tool_settings.mesh_selection_mode"
+            prop.data_path = "tool_settings.mesh_selection_mode"
             layout.separator()
 
             prop = layout.operator("wm.context_set_value", text="Vertex & Edge & Face", icon='SNAP_VOLUME')
             prop.value = "(True, True, True)"
-            prop.path = "tool_settings.mesh_selection_mode"                        
+            prop.data_path = "tool_settings.mesh_selection_mode"                        
 
 
 
