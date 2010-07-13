@@ -45,7 +45,7 @@ def register():
         register(cls)
 
     bpy.types.INFO_MT_mesh_add.append(add_mesh_bolt_button)
-    bpy.types.VIEW3D_PT_tools_objectmode.prepend(add_mesh_bolt_button) #just for testing
+    #bpy.types.VIEW3D_PT_tools_objectmode.prepend(add_mesh_bolt_button) #just for testing
 
 def unregister():
     unregister = bpy.types.unregister
@@ -53,7 +53,7 @@ def unregister():
         unregister(cls)
 
     bpy.types.INFO_MT_mesh_add.remove(add_mesh_bolt_button)
-    bpy.types.VIEW3D_PT_tools_objectmode.remove(add_mesh_bolt_button) #just for testing
+    #bpy.types.VIEW3D_PT_tools_objectmode.remove(add_mesh_bolt_button) #just for testing
     
 if __name__ == "__main__":
     register()
