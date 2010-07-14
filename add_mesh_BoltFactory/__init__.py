@@ -18,7 +18,7 @@
 
 
 bl_addon_info = {
-    'name': 'Add Mesh: Bolt',
+    'name': 'Add Mesh: BoltFactory',
     'author': 'Aaron Keith',
     'version': '3.9',
     'blender': (2, 5, 3),
