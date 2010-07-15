@@ -137,7 +137,7 @@ def Scale_Mesh_Verts(verts,scale_factor):
 #    A new rotation matrix. 
 def Simple_RotationMatrix(angle, matSize, axisFlag):
     if matSize != 4 :
-        #print ("Simple_RotationMatrix can only do 4x4")
+        print ("Simple_RotationMatrix can only do 4x4")
         
     q = radians(angle)  #make the rotation go clockwise
     
@@ -148,7 +148,7 @@ def Simple_RotationMatrix(angle, matSize, axisFlag):
     elif axisFlag == 'z':
         matrix = MATHUTILS.Matrix([cos(q),sin(q),0,0],[-sin(q),cos(q),0,0],[0,0,1,0],[0,0,0,1])  
     else:
-        #print   ("Simple_RotationMatrix can only do x y z axis")
+        print   ("Simple_RotationMatrix can only do x y z axis")
     return matrix
 
 
@@ -2047,7 +2047,7 @@ def Create_New_Mesh(props, context, align_matrix):
     mesh.update()
     ob_new = bpy.data.objects.new(sObjName, mesh)
     scene.objects.link(ob_new)
-    ob_new.selected = True
+    ob_new.select = True
     scene.objects.active = ob_new
 
     #ob_new.location = scene.cursor_location
