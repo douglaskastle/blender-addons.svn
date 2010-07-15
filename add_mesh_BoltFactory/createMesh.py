@@ -137,7 +137,7 @@ def Scale_Mesh_Verts(verts,scale_factor):
 #    A new rotation matrix. 
 def Simple_RotationMatrix(angle, matSize, axisFlag):
     if matSize != 4 :
-        print ("Simple_RotationMatrix can only do 4x4")
+        #print ("Simple_RotationMatrix can only do 4x4")
         
     q = radians(angle)  #make the rotation go clockwise
     
@@ -148,7 +148,7 @@ def Simple_RotationMatrix(angle, matSize, axisFlag):
     elif axisFlag == 'z':
         matrix = MATHUTILS.Matrix([cos(q),sin(q),0,0],[-sin(q),cos(q),0,0],[0,0,1,0],[0,0,0,1])  
     else:
-        print   ("Simple_RotationMatrix can only do x y z axis")
+        #print   ("Simple_RotationMatrix can only do x y z axis")
     return matrix
 
 
@@ -1966,7 +1966,7 @@ def Bolt_Mesh(props, context):
         #need to size Allen bit if it is too big.
         if  Allen_Bit_Dia(props.bf_Allen_Bit_Flat_Distance) > Max_Pan_Bit_Dia(props.bf_Pan_Head_Dia):
             ReSized_Allen_Bit_Flat_Distance = Allen_Bit_Dia_To_Flat(Max_Pan_Bit_Dia(props.bf_Pan_Head_Dia)) * 1.05
-            print ("Resized Allen Bit Flat Distance to ",ReSized_Allen_Bit_Flat_Distance) 
+            #print ("Resized Allen Bit Flat Distance to ",ReSized_Allen_Bit_Flat_Distance) 
  
     #bit Mesh
     if props.bf_Bit_Type == 'bf_Bit_Allen':
