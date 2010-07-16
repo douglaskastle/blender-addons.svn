@@ -88,7 +88,7 @@ def calc_callback(self, context):
                 locs.append([1.0, 1.0, 0.0, ed.index, loc.resize4D()])
     if bpy.context.scene.display_face_index:
         for f in me.faces:
-            if f.selected or not bpy.context.scene.display_sel_only:
+            if f.select or not bpy.context.scene.display_sel_only:
                 locs.append([1.0, 0.0, 0.5, f.index, f.center.resize4D()])
                 
     for loc in locs:
