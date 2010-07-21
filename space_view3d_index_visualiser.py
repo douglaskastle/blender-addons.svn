@@ -76,11 +76,11 @@ def calc_callback(self, context):
     #bpy.ops.object.editmode_toggle()
     if bpy.context.scene.display_vert_index:
         for v in me.verts:
-            if v.selected or not bpy.context.scene.display_sel_only:
+            if v.select or not bpy.context.scene.display_sel_only:
                 locs.append([1.0, 1.0, 1.0, v.index, v.co.copy().resize4D()])
     if bpy.context.scene.display_edge_index:
         for ed in me.edges:
-            if ed.selected or not bpy.context.scene.display_sel_only:
+            if ed.select or not bpy.context.scene.display_sel_only:
                 v1, v2 = ed.verts
                 v1 = me.verts[v1].co.copy()
                 v2 = me.verts[v2].co.copy()
