@@ -16,21 +16,25 @@
 #
 # ##### END GPL LICENSE BLOCK #####
 
-bl_addon_info = {
-	'name': 'Import Autocad DXF (.dxf)',
-	'author': 'Thomas Larsson',
-	'version': '0.1',
-	'blender': (2, 5, 3),
-	'location': 'File > Import',
-	'description': 'Import files in the Autocad DXF format (.dxf)',
-	'wiki_url': 'http://wiki.blender.org/index.php/Extensions:Py/Scripts',
-	'category': 'Import/Export'}
-
 """
 Place this file in the .blender/scripts/addons dir
 You have to activated the script in the "Add-Ons" tab (user preferences).
 Access from the File > Import menu.
 """
+
+
+bl_addon_info = {
+	'name': 'Import: Autocad DXF (.dxf)',
+	'author': 'Thomas Larsson',
+	'version': '0.1',
+	'blender': (2, 5, 3),
+	'location': 'File > Import',
+	'description': 'Import files in the Autocad DXF format (.dxf)',
+	'warning': '', # used for warning icon and text in addons panel
+	'wiki_url': 'http://wiki.blender.org/index.php/Extensions:Py/Scripts',
+	'tracker_url': '',
+	'category': 'Import/Export'}
+
 
 import os
 import codecs
