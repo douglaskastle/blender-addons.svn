@@ -577,7 +577,7 @@ def Create_Pan_Head(HOLE_DIA,HEAD_DIA,SHANK_DIA,HEIGHT,RAD1,RAD2,FACE_OFFSET):
     sVerts,sFaces = SpinDup(verts,faces,360,DIV,'z')
     sVerts.extend(verts)        #add the start verts to the Spin verts to complete the loop
     
-    faces.extend(Build_Face_List_Quads(FaceStart,Row-1,DIV))
+    faces.extend(Build_Face_List_Quads(FaceStart,Row-1,DIV,1))
 
     Global_Head_Height = HEIGHT ;
 
@@ -645,7 +645,7 @@ def Create_Dome_Head(HOLE_DIA,HEAD_DIA,SHANK_DIA,HEIGHT,RAD1,RAD2,FACE_OFFSET):
     sVerts,sFaces = SpinDup(verts,faces,360,DIV,'z')
     sVerts.extend(verts)        #add the start verts to the Spin verts to complete the loop
     
-    faces.extend(Build_Face_List_Quads(FaceStart,Row-1,DIV))
+    faces.extend(Build_Face_List_Quads(FaceStart,Row-1,DIV,1))
 
     return sVerts,faces,Dome_Height
 
@@ -697,7 +697,7 @@ def Create_Cap_Head(HOLE_DIA,HEAD_DIA,SHANK_DIA,HEIGHT,RAD1,RAD2):
     sVerts.extend(verts)        #add the start verts to the Spin verts to complete the loop
     
 
-    faces.extend(Build_Face_List_Quads(FaceStart,Row-1,DIV))
+    faces.extend(Build_Face_List_Quads(FaceStart,Row-1,DIV,1))
     
     return sVerts,faces,HEIGHT+RAD2
 
@@ -1599,8 +1599,8 @@ def add_Nylon_Head(OUTSIDE_RADIUS,Z_LOCATION = 0):
     sVerts,sFaces = SpinDup(verts,faces,360,DIV,'z')
     sVerts.extend(verts)        #add the start verts to the Spin verts to complete the loop
     
-    faces.extend(Build_Face_List_Quads(FaceStart,Row-1,DIV,1))
-
+    faces.extend(Build_Face_List_Quads(FaceStart,Row-1,DIV))
+    
     return Move_Verts_Up_Z(sVerts,0),faces,Lowest_Z_Vert
 
 
@@ -1653,7 +1653,7 @@ def add_Nylon_Part(OUTSIDE_RADIUS,Z_LOCATION = 0):
     sVerts,sFaces = SpinDup(verts,faces,360,DIV,'z')
     sVerts.extend(verts)  #add the start verts to the Spin verts to complete the loop
     
-    faces.extend(Build_Face_List_Quads(FaceStart,Row-1,DIV,1))
+    faces.extend(Build_Face_List_Quads(FaceStart,Row-1,DIV))
 
     return sVerts,faces,0 - Lowest_Z_Vert
 

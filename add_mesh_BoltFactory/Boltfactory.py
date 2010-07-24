@@ -123,15 +123,15 @@ class add_mesh_bolt(bpy.types.Operator):
             min = 0, soft_min = 0, max = MAX_INPUT_NUMBER,
             description='Flat Distance of the Hex Head')
 
-    bf_Cap_Head_Dia = FloatProperty( attr='bf_Cap_Head_Dia',
+    bf_Cap_Head_Height = FloatProperty( attr='bf_Cap_Head_Height',
             name='Head Height', default = 5.5,
             min = 0, soft_min = 0, max = MAX_INPUT_NUMBER,
-            description='Diameter of the Cap Head')
+            description='Height of the Cap Head')
 
-    bf_Cap_Head_Height = FloatProperty( attr='bf_Cap_Head_Height',
+    bf_Cap_Head_Dia = FloatProperty( attr='bf_Cap_Head_Dia',
             name='Head Dia', default = 3,
             min = 0, soft_min = 0, max = MAX_INPUT_NUMBER,
-            description='Height of the Cap Head')
+            description='Diameter of the Cap Head')
 
     bf_Dome_Head_Dia = FloatProperty( attr='bf_Dome_Head_Dia',
             name='Dome Head Dia', default = 5.6,
@@ -252,8 +252,10 @@ class add_mesh_bolt(bpy.types.Operator):
         col.prop(props,'bf_Crest_Percent')
         col.prop(props,'bf_Root_Percent')
         #Nut
-        col.prop(props,'bf_Hex_Nut_Height')
-        col.prop(props,'bf_Hex_Nut_Flat_Distance')
+        if props.bf_Model_Type == 'bf_Model_Nut':
+            col.prop(props, 'bf_Nut_Type')
+            col.prop(props,'bf_Hex_Nut_Height')
+            col.prop(props,'bf_Hex_Nut_Flat_Distance')
 
 
     ##### POLL #####
