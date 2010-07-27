@@ -18,30 +18,31 @@
 
 # <pep8 compliant>
 
+"""
+Display the indices of vertices, edges and faces in the 3d-view.
+
+How to use:
+- Select a mesh and go into editmode
+- Display the properties panel (N-key)
+- Go to the Mesh Display tab, it helps to fold the tabs above it
+- Press the 'Visualise indices button'
+
+"""
 
 bl_addon_info = {
     'name': '3D View: Index Visualiser',
     'author': 'Bartius Crouch',
-    'version': '2.5 2010/07/09',
-    'blender': (2, 5, 3),
-    'category': '3D View',
-    'location': 'View3D > properties panel > display tab',
+    'version': '2.5.1 2010/07/27',
+    'blender': (2, 5, 4),
+    'location': 'View3D > Properties panel > Mesh Display tab',
+    'warning': '', # used for warning icon and text in addons panel
     'description': 'Display the indices of vertices, edges and faces '\
         'in the 3d-view',
     'wiki_url': 'http://wiki.blender.org/index.php/Extensions:2.5/Py/'\
         'Scripts/Index_Visualiser',
     'tracker_url': 'http://projects.blender.org/tracker/index.php?'\
         'func=detail&aid=21557&group_id=153&atid=468',
-    'doc': """\
-Display the indices of vertices, edges and faces in the 3d-view.
-
-How to use:
-- Select a mesh and go into editmode
-- Display the properties panel (N-key)
-- Go to the Display tab, it helps to fold the tabs above it
-- Press the 'Visualise indices button'
-
-"""}
+    'category': '3D View'}
 
 
 import bgl
@@ -195,12 +196,12 @@ def register():
     bpy.types.Scene.BoolProperty(attr="display_face_index", name="Faces",
         description="Display face indices")
     bpy.types.register(IndexVisualiser)
-    bpy.types.VIEW3D_PT_view3d_display.prepend(menu_func)
+    bpy.types.VIEW3D_PT_view3d_meshdisplay.append(menu_func)
 
 
 def unregister():
     bpy.types.unregister(IndexVisualiser)
-    bpy.types.VIEW3D_PT_view3d_display.remove(menu_func)
+    bpy.types.VIEW3D_PT_view3d_meshdisplay.remove(menu_func)
 
 
 if __name__ == "__main__":
