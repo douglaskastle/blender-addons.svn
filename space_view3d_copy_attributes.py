@@ -17,8 +17,8 @@
 # ##### END GPL LICENSE BLOCK #####
 bl_addon_info = {
     'name': '3D View: Copy Attributes Menu',
-    'author': 'Bassam Kurdali',
-    'version': '0.32 19-6-2010',
+    'author': 'Bassam Kurdali, Fabian Fricke',
+    'version': '0.33 28-7-2010',
     'blender': (2, 5, 3),
     'location': 'View3D > Ctrl/C',
     'description': 'Copy Attributes Menu from Blender 2.4',
@@ -195,6 +195,8 @@ def obDup (ob, active, context): generic_copy(active,ob,"dupli")
 
 def obCol (ob, active, context): ob.color = active.color
 
+def obMas (ob, active, context): ob.game.mass = active.game.mass
+
 def obLok (ob, active, context):
     for index, state in enumerate(active.lock_location):
         ob.lock_location[index] = state
@@ -229,6 +231,57 @@ def obMod (ob, active, context):
         new_modifier = ob.modifiers.new( name = old_modifier.name, type= old_modifier.type )
         generic_copy(old_modifier,new_modifier)
 
+def obWei (ob, active, context):
+    me_source = active.data
+    me_target = ob.data
+    
+    # sanity check: do source and target have the same amount of verts?
+    if len(me_source.verts) != len(me_target.verts):
+        return # todo: warning
+    
+    vgroups_IndexName = {}
+    for i in range(0,len(active.vertex_groups)):
+        groups = active.vertex_groups[i]
+        vgroups_IndexName[groups.index] = groups.name
+    
+    data = {} # vert_indices, [(vgroup_index, weights)]
+    
+    for v in me_source.verts:
+        vg = v.groups
+        vi = v.index
+        
+        if len(vg) > 0:
+            vgroup_collect = []
+            for i in range(0, len(vg)):
+                vgroup_collect.append( (vg[i].group, vg[i].weight) )
+            data[vi] = vgroup_collect
+    
+    # write data to target
+    if ob != active:
+        # add missing vertex groups
+        for vgroup_name in vgroups_IndexName.values():
+            #check if group already exists...
+            already_present = 0
+            for i in range(0,len(ob.vertex_groups)):
+                if ob.vertex_groups[i].name == vgroup_name:
+                    already_present = 1
+            # ... if not, then add
+            if already_present == 0:
+                ob.add_vertex_group(name=vgroup_name)
+        
+        # write weights
+        for v in me_target.verts:
+            for vi_source, vgroupIndex_weight in data.items():
+                if v.index == vi_source:
+                    
+                    for i in range(0, len(vgroupIndex_weight)):
+                        groupName = vgroups_IndexName[ vgroupIndex_weight[i][0] ]
+                        groups = ob.vertex_groups
+                        for vgs in range(0, len(groups)):
+                            if groups[vgs].name == groupName:
+                                ob.add_vertex_to_group(v.index, groups[vgs], vgroupIndex_weight[i][1], "REPLACE")
+
+
 object_copies =(('OBJ_LOC', "Location", "Copy Location from Active to Selected",obLoc),
                 ('OBJ_ROT', "Rotation", "Copy Rotation from Active to Selected",obRot),
                 ('OBJ_SCA', "Scale", "Copy Scale from Active to Selected",obSca),
@@ -236,7 +289,7 @@ object_copies =(('OBJ_LOC', "Location", "Copy Location from Active to Selected",
                 ('OBJ_OFS', "Time Offset", "Copy Time Offset from Active to Selected",obOfs),
                 ('OBJ_DUP', "Dupli", "Copy Dupli from Active to Selected",obDup),
                 ('OBJ_COL', "Object Color", "Copy Object Color from Active to Selected",obCol),
-                #('OBJ_MAS', "Mass", "Copy Mass from Active to Selected"),
+                ('OBJ_MAS', "Mass", "Copy Mass from Active to Selected", obMas),
                 #('OBJ_DMP', "Damping", "Copy Damping from Active to Selected"),
                 #('OBJ_ALL', "All Physical Attributes", "Copy Physical Atributes from Active to Selected"),
                 #('OBJ_PRP', "Properties", "Copy Properties from Active to Selected"),
@@ -248,7 +301,8 @@ object_copies =(('OBJ_LOC', "Location", "Copy Location from Active to Selected",
                 #('OBJ_SUB', "Subsurf Settings", "Copy Subsurf Setings from Active to Selected"),
                 #('OBJ_SMO', "AutoSmooth", "Copy AutoSmooth from Active to Selected"),
                 ('OBJ_IDX', "Pass Index", "Copy Pass Index from Active to Selected",obIdx),
-                ('OBJ_MOD', "Modifiers","Copy Modifiers from Active to Selected",obMod))
+                ('OBJ_MOD', "Modifiers","Copy Modifiers from Active to Selected",obMod),
+                ('OBJ_WEI', "Vertex Weights","Copy vertex weights based on indices",obWei))
 
 def object_poll_func(self, context):
     return(len(context.selected_objects) > 1)
