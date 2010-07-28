@@ -18,7 +18,7 @@
 bl_addon_info = {
     'name': '3D View: Copy Attributes Menu',
     'author': 'Bassam Kurdali, Fabian Fricke',
-    'version': '0.33 28-7-2010',
+    'version': '0.34 28-7-2010',
     'blender': (2, 5, 3),
     'location': 'View3D > Ctrl/C',
     'description': 'Copy Attributes Menu from Blender 2.4',
@@ -167,7 +167,9 @@ def obLoopExec(self, context, funk):
     selected = context.selected_objects[:]
     selected.remove(active)
     for obj in selected:
-        funk(obj, active,context)
+        msg = funk(obj, active,context)
+    if msg:
+        self.report({msg[0]}, msg[1])
 
 #The following functions are used o copy attributes frome active to selected object
 
@@ -189,13 +191,19 @@ def obDrw (ob, active, context):
     ob.empty_draw_type = active.empty_draw_type
     ob.empty_draw_size = active.empty_draw_size
 
-def obOfs (ob, active, context): ob.time_offset = active.time_offset
+def obOfs (ob, active, context):
+    ob.time_offset = active.time_offset
+    return ('INFO', "time offset copied")
 
-def obDup (ob, active, context): generic_copy(active,ob,"dupli")
+def obDup (ob, active, context):
+    generic_copy(active,ob,"dupli")
+    return ('INFO', "duplication method copied")
 
 def obCol (ob, active, context): ob.color = active.color
 
-def obMas (ob, active, context): ob.game.mass = active.game.mass
+def obMas (ob, active, context):
+    ob.game.mass = active.game.mass
+    return ('INFO', "mass copied")
 
 def obLok (ob, active, context):
     for index, state in enumerate(active.lock_location):
@@ -207,6 +215,7 @@ def obLok (ob, active, context):
     ob.lock_rotation_w = active.lock_rotation_w
     for index, state in enumerate(active.lock_scale):
         ob.lock_scale[index] = state
+    return ('INFO', "transform locks copied")
 
 def obCon (ob, active, context):
     #for consistency with 2.49, delete old constraints first
@@ -215,14 +224,19 @@ def obCon (ob, active, context):
     for old_constraint in  active.constraints.values():
         new_constraint = ob.constraints.new(old_constraint.type)
         generic_copy(old_constraint,new_constraint)
+    return ('INFO', "constraints copied")
 
+# not working (texspace_loc and texspace_size are readonly), disabled for now.
 def obTex (ob, active, context):
     if 'texspace_loc' in dir(ob.data) and 'texspace_loc' in dir(active.data):
         ob.data.texspace_loc = active.data.texspace_loc
     if 'texspace_size' in dir(ob.data) and 'texspace_size' in dir(active.data):
         ob.data.texspace_size = active.data.texspace_size
+    return ('INFO', "texture space copied")
 
-def obIdx (ob, active, context): ob.pass_index = active.pass_index
+def obIdx (ob, active, context):
+    ob.pass_index = active.pass_index
+    return ('INFO', "pass index copied")
 
 def obMod (ob, active, context):
     for modifier in ob.modifiers.values():
@@ -230,6 +244,7 @@ def obMod (ob, active, context):
     for old_modifier in active.modifiers.values():
         new_modifier = ob.modifiers.new( name = old_modifier.name, type= old_modifier.type )
         generic_copy(old_modifier,new_modifier)
+    return ('INFO', "modifiers copied")
 
 def obWei (ob, active, context):
     me_source = active.data
@@ -237,7 +252,7 @@ def obWei (ob, active, context):
     
     # sanity check: do source and target have the same amount of verts?
     if len(me_source.verts) != len(me_target.verts):
-        return # todo: warning
+        return ('ERROR', "objects have different vertex counts, doing nothing")
     
     vgroups_IndexName = {}
     for i in range(0,len(active.vertex_groups)):
@@ -280,7 +295,8 @@ def obWei (ob, active, context):
                         for vgs in range(0, len(groups)):
                             if groups[vgs].name == groupName:
                                 ob.add_vertex_to_group(v.index, groups[vgs], vgroupIndex_weight[i][1], "REPLACE")
-
+    return ('INFO', "weights copied")
+    
 
 object_copies =(('OBJ_LOC', "Location", "Copy Location from Active to Selected",obLoc),
                 ('OBJ_ROT', "Rotation", "Copy Rotation from Active to Selected",obRot),
@@ -297,7 +313,7 @@ object_copies =(('OBJ_LOC', "Location", "Copy Location from Active to Selected",
                 ('OBJ_LOK', "Protected Transform", "Copy Protected Tranforms from Active to Selected",obLok),
                 ('OBJ_CON', "Object Constraints", "Copy Object Constraints from Active to Selected",obCon),
                 #('OBJ_NLA', "NLA Strips", "Copy NLA Strips from Active to Selected"),
-                ('OBJ_TEX', "Texture Space", "Copy Texture Space from Active to Selected",obTex),
+                #('OBJ_TEX', "Texture Space", "Copy Texture Space from Active to Selected",obTex),
                 #('OBJ_SUB', "Subsurf Settings", "Copy Subsurf Setings from Active to Selected"),
                 #('OBJ_SMO', "AutoSmooth", "Copy AutoSmooth from Active to Selected"),
                 ('OBJ_IDX', "Pass Index", "Copy Pass Index from Active to Selected",obIdx),
