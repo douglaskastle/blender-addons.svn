@@ -226,12 +226,11 @@ def obCon (ob, active, context):
         generic_copy(old_constraint,new_constraint)
     return ('INFO', "constraints copied")
 
-# not working (texspace_loc and texspace_size are readonly), disabled for now.
 def obTex (ob, active, context):
     if 'texspace_loc' in dir(ob.data) and 'texspace_loc' in dir(active.data):
-        ob.data.texspace_loc = active.data.texspace_loc
+        ob.data.texspace_loc[:] = active.data.texspace_loc[:]
     if 'texspace_size' in dir(ob.data) and 'texspace_size' in dir(active.data):
-        ob.data.texspace_size = active.data.texspace_size
+        ob.data.texspace_size[:] = active.data.texspace_size[:]
     return ('INFO', "texture space copied")
 
 def obIdx (ob, active, context):
@@ -313,7 +312,7 @@ object_copies =(('OBJ_LOC', "Location", "Copy Location from Active to Selected",
                 ('OBJ_LOK', "Protected Transform", "Copy Protected Tranforms from Active to Selected",obLok),
                 ('OBJ_CON', "Object Constraints", "Copy Object Constraints from Active to Selected",obCon),
                 #('OBJ_NLA', "NLA Strips", "Copy NLA Strips from Active to Selected"),
-                #('OBJ_TEX', "Texture Space", "Copy Texture Space from Active to Selected",obTex),
+                ('OBJ_TEX', "Texture Space", "Copy Texture Space from Active to Selected",obTex),
                 #('OBJ_SUB', "Subsurf Settings", "Copy Subsurf Setings from Active to Selected"),
                 #('OBJ_SMO', "AutoSmooth", "Copy AutoSmooth from Active to Selected"),
                 ('OBJ_IDX', "Pass Index", "Copy Pass Index from Active to Selected",obIdx),
