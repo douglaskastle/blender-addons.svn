@@ -18,7 +18,7 @@
 bl_addon_info = {
     'name': '3D View: Copy Attributes Menu',
     'author': 'Bassam Kurdali, Fabian Fricke',
-    'version': '0.34 28-7-2010',
+    'version': '0.35 04-8-2010',
     'blender': (2, 5, 3),
     'location': 'View3D > Ctrl/C',
     'description': 'Copy Attributes Menu from Blender 2.4',
@@ -339,28 +339,32 @@ class VIEW3D_MT_copypopup(bpy.types.Menu):
 
 def register():
     
-    for op in object_ops:
-        bpy.types.register(op)
-    for op in pose_ops:
-        bpy.types.register(op)
-    bpy.types.register(VIEW3D_MT_copypopup) 
-    bpy.types.register(VIEW3D_MT_posecopypopup)
+    if False:
+        for op in object_ops:
+            bpy.types.register(op)
+        for op in pose_ops:
+            bpy.types.register(op)
+        bpy.types.register(VIEW3D_MT_copypopup) 
+        bpy.types.register(VIEW3D_MT_posecopypopup)
     km = bpy.context.manager.keyconfigs['Blender'].keymaps['Object Mode']
     kmi = km.items.add('wm.call_menu','C','PRESS',ctrl=True)
     kmi.properties.name = 'VIEW3D_MT_copypopup'
-    kmi = bpy.context.manager.keyconfigs['Blender'].keymaps['Pose'].items['pose.copy']
-    #kmi = km.items.add('wm.call_menu','C','PRESS',ctrl=True)
-    kmi.idname='wm.call_menu'
+    try:
+        kmi = bpy.context.manager.keyconfigs['Blender'].keymaps['Pose'].items['pose.copy']
+        kmi.idname='wm.call_menu'
+    except KeyError:
+        kmi = km.items.add('wm.call_menu','C','PRESS',ctrl=True)
     kmi.properties.name = 'VIEW3D_MT_posecopypopup'
 
 def unregister():
 
-    bpy.types.unregister(VIEW3D_MT_copypopup) 
-    bpy.types.unregister(VIEW3D_MT_posecopypopup)
-    for op in object_ops:
-        bpy.types.unregister(op)
-    for op in pose_ops:
-        bpy.types.unregister(op)
+    if False:
+        bpy.types.unregister(VIEW3D_MT_copypopup) 
+        bpy.types.unregister(VIEW3D_MT_posecopypopup)
+        for op in object_ops:
+            bpy.types.unregister(op)
+        for op in pose_ops:
+            bpy.types.unregister(op)
     for item in bpy.context.manager.keyconfigs['Blender'].keymaps['Pose'].items:
         if item.name == 'Call Menu' and item.properties.idname=='wm.call_menu' and item.properties.name == 'VIEW3D_MT_posecopypopup':
             item.idname='pose.copy'
