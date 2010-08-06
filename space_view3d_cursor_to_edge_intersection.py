@@ -90,7 +90,7 @@ def edgeIntersect(context, operator):
         bpy.ops.object.mode_set(mode='OBJECT')
     
     for e in mesh.edges:
-        if e.selected:
+        if e.select:
             edges.append(e)
 
     if is_editmode:
@@ -106,7 +106,7 @@ def edgeIntersect(context, operator):
         operator.report({'ERROR'}, "Selected edges are parallel.")
         return
 
-    tm = obj.matrix.copy()
+    tm = obj.matrix_world.copy()
     point = ((line[0] + line[1]) / 2)
     point = tm * point
 
@@ -121,7 +121,8 @@ class CursorToEdgeIntersection(bpy.types.Operator):
     bl_idname = "view3d.snap_cursor_to_edge_intersection"
     bl_label = "Cursor to Edge Intersection"
 
-    def poll(self, context):
+    @staticmethod
+    def poll(context):
         obj = context.active_object
         return obj != None and obj.type == 'MESH'
 
@@ -135,11 +136,9 @@ menu_func = (lambda self,
             text="Cursor to Edge intersection"))
 
 def register():
-    bpy.types.register(CursorToEdgeIntersection)
     bpy.types.VIEW3D_MT_snap.append(menu_func)
 
 def unregister():
-    bpy.types.unregister(CursorToEdgeIntersection)
     bpy.types.VIEW3D_MT_snap.append(menu_func)
 
 if __name__ == "__main__":

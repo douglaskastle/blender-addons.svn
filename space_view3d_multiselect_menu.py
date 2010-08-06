@@ -107,7 +107,6 @@ class VIEW3D_MT_Multiselect_Menu(bpy.types.Menu):
 
 
 def register():
-    bpy.types.register(VIEW3D_MT_Multiselect_Menu)
     
     km = bpy.context.manager.active_keyconfig.keymaps['Mesh']
     for kmi in km.items:
@@ -120,7 +119,7 @@ def register():
     kmi.properties.name = "VIEW3D_MT_Multiselect_Menu"
 
 def unregister():
-    bpy.types.unregister(VIEW3D_MT_Multiselect_Menu)
+
     km = bpy.context.manager.active_keyconfig.keymaps['Mesh']
     for kmi in km.items:
         if kmi.idname == 'wm.call_menu':

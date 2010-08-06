@@ -78,7 +78,7 @@ def create_mesh_object(context, verts, edges, faces, name, edit, align_matrix):
 
         # Use the active obj and select it.
         ob_new = obj_act
-        ob_new.selected = True
+        ob_new.select = True
 
         if obj_act.mode == 'OBJECT':
             # Get existing mesh datablock.
@@ -103,11 +103,11 @@ def create_mesh_object(context, verts, edges, faces, name, edit, align_matrix):
 
         # Link new object to the given scene and select it.
         scene.objects.link(ob_new)
-        ob_new.selected = True
+        ob_new.select = True
 
         # Place the object at the 3D cursor location.
         # apply viewRotaion
-        ob_new.matrix = align_matrix
+        ob_new.matrix_world = align_matrix
 
     if obj_act and obj_act.mode == 'EDIT':
         if not edit:
@@ -115,7 +115,7 @@ def create_mesh_object(context, verts, edges, faces, name, edit, align_matrix):
             bpy.ops.object.mode_set(mode='OBJECT')
 
             # Select the active object as well.
-            obj_act.selected = True
+            obj_act.select = True
 
             # Apply location of new object.
             scene.update()
@@ -1386,27 +1386,11 @@ menu_func = (lambda self, context: self.layout.menu(
 
 
 def register():
-    # Register the operators/menus.
-    bpy.types.register(AddTruncatedTetrahedron)
-    bpy.types.register(AddCuboctahedron)
-    bpy.types.register(AddRhombicuboctahedron)
-    bpy.types.register(AddTruncatedOctahedron)
-    bpy.types.register(AddTruncatedCuboctahedron)
-    bpy.types.register(INFO_MT_mesh_archimedean_solids_add)
-
     # Add "Archimedean Solids" menu to the "Add Mesh" menu
     space_info.INFO_MT_mesh_add.append(menu_func)
 
 
 def unregister():
-    # Unregister the operators/menus.
-    bpy.types.unregister(AddTruncatedTetrahedron)
-    bpy.types.unregister(AddCuboctahedron)
-    bpy.types.unregister(AddRhombicuboctahedron)
-    bpy.types.unregister(AddTruncatedOctahedron)
-    bpy.types.unregister(AddTruncatedCuboctahedron)
-    bpy.types.unregister(INFO_MT_mesh_archimedean_solids_add)
-
     # Remove "Archimedean Solids" menu from the "Add Mesh" menu.
     space_info.INFO_MT_mesh_add.remove(menu_func)
 

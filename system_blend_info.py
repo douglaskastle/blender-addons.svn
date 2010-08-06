@@ -194,13 +194,10 @@ class OBJECT_PT_blendinfo(bpy.types.Panel):
 
 
 def register():
-    # Register the operators/menus.
-    bpy.types.register(OBJECT_PT_blendinfo)
-
+    pass
 
 def unregister():
-    # Unregister the operators/menus.
-    bpy.types.register(OBJECT_PT_blendinfo)
+    pass
 
 if __name__ == "__main__":
     register()

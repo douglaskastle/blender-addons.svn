@@ -65,7 +65,7 @@ class SmartLineBreak(bpy.types.Operator):
         return {"FINISHED"}
 
 def register():
-    bpy.types.register(SmartLineBreak)
+    
     #Getting the key item by its index seems like a bit of a hack...
     #Does anyone know a better way?
     Item=bpy.context.manager.keyconfigs["Blender"].keymaps["Text"].item_from_id(59)
@@ -74,7 +74,7 @@ def register():
 def unregister():
     Item=bpy.context.manager.keyconfigs["Blender"].keymaps["Text"].item_from_id(59)
     Item.idname="text.line_break"
-    bpy.types.unregister(SmartLineBreak)
+    
     
 if __name__=="__main__":
     register()
