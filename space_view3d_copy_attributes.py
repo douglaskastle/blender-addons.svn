@@ -349,8 +349,9 @@ def register():
     km = bpy.context.manager.keyconfigs['Blender'].keymaps['Object Mode']
     kmi = km.items.add('wm.call_menu','C','PRESS',ctrl=True)
     kmi.properties.name = 'VIEW3D_MT_copypopup'
+    km = bpy.context.manager.keyconfigs['Blender'].keymaps['Pose']
     try:
-        kmi = bpy.context.manager.keyconfigs['Blender'].keymaps['Pose'].items['pose.copy']
+        kmi = km.items['pose.copy']
         kmi.idname='wm.call_menu'
     except KeyError:
         kmi = km.items.add('wm.call_menu','C','PRESS',ctrl=True)
